@@ -18,12 +18,10 @@ package net.lag.configgy
 
 import javax.{management => jmx}
 import scala.collection.JavaConversions
-import net.lag.logging.Logger
-
 
 class JmxWrapper(node: Attributes) extends jmx.DynamicMBean {
 
-  private val log = Logger.get
+  //private val log = Logger.get
 
   val operations: Array[jmx.MBeanOperationInfo] = Array(
     new jmx.MBeanOperationInfo("set", "set a string value",
@@ -69,7 +67,7 @@ class JmxWrapper(node: Attributes) extends jmx.DynamicMBean {
               node.setString(name, value)
             } catch {
               case e: Exception =>
-                log.warning("exception: %s", e.getMessage)
+                //log.warning("exception: %s", e.getMessage)
                 throw e
             }
           case _ =>

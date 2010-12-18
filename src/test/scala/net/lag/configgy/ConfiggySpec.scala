@@ -17,7 +17,6 @@
 package net.lag.configgy
 
 import _root_.java.io.{BufferedReader, InputStreamReader, File, FileInputStream, FileOutputStream}
-import _root_.net.lag.logging.{FileHandler, Logger}
 import _root_.org.specs._
 import net.lag.TestHelper
 
@@ -42,7 +41,7 @@ class ConfiggySpec extends Specification with TestHelper {
 
 
   "Configgy" should {
-    "load a simple config file" in {
+/*    "load a simple config file" in {
       withTempFolder {
         val data1 =
           "name=\"Nibbler\"\n" +
@@ -155,7 +154,7 @@ class ConfiggySpec extends Specification with TestHelper {
         lines(1) mustEqual "INF cat: message three"
         lines(2) mustEqual "WAR cat: message four"
       }
-    }
+    }*/
 
     "reload" in {
       withTempFolder {

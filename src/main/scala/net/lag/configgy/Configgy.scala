@@ -17,7 +17,6 @@
 package net.lag.configgy
 
 import java.io.File
-import net.lag.logging.Logger
 
 
 /**
@@ -25,7 +24,6 @@ import net.lag.logging.Logger
  */
 object Configgy {
   private var _config: Config = null
-  private val subscriber = new LoggingConfigSubscriber
 
   /**
    * The base Config object for this server. This will only be defined
@@ -39,9 +37,7 @@ object Configgy {
    * don't work for your needs, use this as a fallback.
    */
   def config_=(c: Config) {
-    Logger.reset
     _config = c
-    configLogging
   }
 
   /**
@@ -98,62 +94,5 @@ object Configgy {
    */
   def configureFromString(data: String) = {
     config = Config.fromString(data)
-  }
-
-  private def configLogging = {
-    val log = Logger.get("")
-
-    try {
-      val attr = _config.getConfigMap("log")
-      subscriber.commit(None, attr)
-      if (attr.isDefined) {
-        attr.get.subscribe(subscriber)
-      }
-    } catch {
-      case e: Throwable =>
-        log.critical(e, "Failed to configure logging")
-        throw e
-    }
-  }
-
-  /**
-   * Temporarily configure logging with a passed-in "log" config block.
-   * Changes made to the config block *after* calling this method will
-   * not be picked up by logging.
-   */
-  def configLogging(config: ConfigMap): Unit = synchronized {
-    subscriber.commit(None, Some(config))
-  }
-
-  private class LoggingConfigSubscriber extends Subscriber {
-    @throws(classOf[ValidationException])
-    def validate(current: Option[ConfigMap], replacement: Option[ConfigMap]): Unit = {
-      try {
-        for (logConfig <- replacement) {
-          Logger.configure(logConfig, true, true)
-          for (key <- logConfig.keys; block <- logConfig.getConfigMap(key)) {
-            Logger.configure(block, true, false)
-          }
-        }
-      } catch {
-        case e: Throwable => throw new ValidationException(e.toString)
-      }
-    }
-
-    def commit(current: Option[ConfigMap], replacement: Option[ConfigMap]): Unit = {
-      Logger.reset
-
-      for (logConfig <- replacement) {
-        Logger.configure(logConfig, false, true)
-        for (key <- logConfig.keys; block <- logConfig.getConfigMap(key)) {
-          Logger.configure(block, false, false)
-        }
-      }
-
-      val log = Logger.get("")
-      if (log.getLevel() eq null) {
-        log.setLevel(Logger.INFO)
-      }
-    }
   }
 }

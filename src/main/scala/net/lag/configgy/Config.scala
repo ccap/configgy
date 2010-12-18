@@ -22,7 +22,6 @@ import javax.{management => jmx}
 import scala.collection.{Map, Set}
 import scala.collection.{immutable, mutable}
 import net.lag.extensions._
-import net.lag.logging.Logger
 
 
 private abstract class Phase
@@ -342,7 +341,7 @@ object Config {
       config.loadFile(path, filename)
     } catch {
       case e: Throwable =>
-        Logger.get.critical(e, "Failed to load config file '%s/%s'", path, filename)
+        //Logger.get.critical(e, "Failed to load config file '%s/%s'", path, filename)
         throw e
     }
     config
@@ -392,7 +391,7 @@ object Config {
       config.loadFile(name)
     } catch {
       case e: Throwable =>
-        Logger.get.critical(e, "Failed to load config resource '%s'", name)
+        //Logger.get.critical(e, "Failed to load config resource '%s'", name)
         throw e
     }
     config

@@ -478,11 +478,11 @@ class ConfigParserSpec extends Specification {
     }
 
     "read a really long list of strings without recursing to death" in {
-      skip("not fixed yet")
+      //skip("not fixed yet")
       val c = new Config
       c.importer = new ResourceImporter(getClass.getClassLoader)
       c.load("include \"evil.conf\"\n")
-      c.getList("things").size mustEqual 1000
+      c.getList("things").size mustEqual 1008
     }
   }
 }
