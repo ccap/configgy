@@ -1,7 +1,6 @@
 import sbt._
-import com.twitter.sbt._
 
-class ConfiggyProject(info: ProjectInfo) extends StandardProject(info) with SubversionPublisher {
+class ConfiggyProject(info: ProjectInfo) extends DefaultProject(info) {
   val specs = "org.scala-tools.testing" %% "specs" % "1.6.6" % "test"
 
   override def pomExtra =
@@ -15,6 +14,4 @@ class ConfiggyProject(info: ProjectInfo) extends StandardProject(info) with Subv
         <distribution>repo</distribution>
       </license>
     </licenses>)
-
-  override def subversionRepository = Some("http://svn.local.twitter.com/maven-public")
 }
