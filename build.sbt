@@ -2,7 +2,7 @@ name := "configgy"
 
 organization := "net.lag"
 
-version := "2.0.2-nologgy"
+version := "2.0.4-nologgy"
 
 resolvers += "ccap-artifactory-scala" at "http://artifactory.ci.wicourts.gov/scala"
 
