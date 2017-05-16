@@ -49,30 +49,30 @@ private[configgy] object EnvironmentAttributes extends ConfigMap {
   }
 
   def getConfigMap(key: String): Option[ConfigMap] = None
-  def configMap(key: String): ConfigMap = error("not implemented")
+  def configMap(key: String): ConfigMap = throw new Exception("not implemented")
 
   def getList(key: String): Seq[String] = getString(key) match {
     case None => Array[String]()
     case Some(x) => Array[String](x)
   }
 
-  def setString(key: String, value: String): Unit = error("read-only attributes")
-  def setList(key: String, value: Seq[String]): Unit = error("read-only attributes")
-  def setConfigMap(key: String, value: ConfigMap): Unit = error("read-only attributes")
+  def setString(key: String, value: String): Unit = throw new Exception("read-only attributes")
+  def setList(key: String, value: Seq[String]): Unit = throw new Exception("read-only attributes")
+  def setConfigMap(key: String, value: ConfigMap): Unit = throw new Exception("read-only attributes")
 
   def contains(key: String): Boolean = {
     env.contains(key) || getSystemProperties().contains(key)
   }
 
-  def remove(key: String): Boolean = error("read-only attributes")
+  def remove(key: String): Boolean = throw new Exception("read-only attributes")
   def keys: Iterator[String] = (getSystemProperties().keySet ++ env.keySet).iterator
-  def asMap(): Map[String, String] = error("not implemented")
-  def toConfigString = error("not implemented")
-  def subscribe(subscriber: Subscriber): SubscriptionKey = error("not implemented")
+  def asMap(): Map[String, String] = throw new Exception("not implemented")
+  def toConfigString = throw new Exception("not implemented")
+  def subscribe(subscriber: Subscriber): SubscriptionKey = throw new Exception("not implemented")
   def copy(): ConfigMap = this
   def copyInto[T <: ConfigMap](m: T) = m
   def inheritFrom: Option[ConfigMap] = None
-  def inheritFrom_=(config: Option[ConfigMap]) = error("not implemented")
+  def inheritFrom_=(config: Option[ConfigMap]) = throw new Exception("not implemented")
 
 
   try {
